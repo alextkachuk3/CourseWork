@@ -13,7 +13,6 @@ namespace JwtWebApiTutorial.Controllers
     [ApiController]
     public class AuthController : ControllerBase
     {
-        public static List<User> users = new List<User>();
         private readonly IConfiguration _configuration;
         private readonly IUserService _userService;
 
@@ -37,11 +36,11 @@ namespace JwtWebApiTutorial.Controllers
 
             var user = new User();
 
-            user.Username = request.Username;
+            user.Login = request.Login;
             user.PasswordHash = passwordHash;
             user.PasswordSalt = passwordSalt;
 
-            users.Add(user);
+            _userService.AddUser(user);
 
             return Ok(user);
         }
@@ -49,9 +48,9 @@ namespace JwtWebApiTutorial.Controllers
         [HttpPost("login")]
         public async Task<ActionResult<string>> Login(UserDto request)
         {
-            User? user = users.Where(i => i.Username.Equals(request.Username)).FirstOrDefault();
+            User? user = _userService.FindUser(request.Login);
 
-            if (user?.Username != request.Username)
+            if (user?.Login != request.Login)
             {
                 return BadRequest("User not found.");
             }
@@ -69,7 +68,7 @@ namespace JwtWebApiTutorial.Controllers
         {
             List<Claim> claims = new List<Claim>
             {
-                new Claim(ClaimTypes.Name, user.Username),
+                new Claim(ClaimTypes.Name, user.Login),
                 new Claim(ClaimTypes.Role, "Admin")
             };
 
