@@ -1,7 +1,7 @@
 ﻿using BookingWebService.Models;
 using System.Security.Claims;
 
-namespace JwtWebApiTutorial.Services.UserService
+namespace BookingWebService.Services.UserService
 {
     public class UserService : IUserService
     {
@@ -33,6 +33,17 @@ namespace JwtWebApiTutorial.Services.UserService
         public User FindUser(string login)
         {
             return _dbContext.Users.Where(i => i.Login.Equals(login)).FirstOrDefault();
+        }
+
+        public int GetId()
+        {
+            var login = string.Empty;
+            if (_httpContextAccessor.HttpContext != null)
+            {
+                login = _httpContextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.Name);
+            }
+
+            return _dbContext.Users.Where(i => i.Login.Equals(login)).FirstOrDefault().UserId;
         }
 
         public string GetLogin()
