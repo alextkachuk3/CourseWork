@@ -1,5 +1,6 @@
 ﻿global using BookingWebService.Services.UserService;
 using BookingWebService.Models;
+using BookingWebService.Services.HotelNumberService;
 using BookingWebService.Services.HotelService;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
@@ -14,6 +15,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IHotelService, HotelService>();
+builder.Services.AddScoped<IHotelNumberService, HotelNumberService>();
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddSwaggerGen(options =>
 {
@@ -41,6 +43,8 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     });
 
 builder.Services.AddControllersWithViews();
+
+builder.Services.AddMvc();
 
 string connection = builder.Configuration.GetConnectionString("DefaultConnection");
 

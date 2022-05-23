@@ -1,16 +1,22 @@
-﻿namespace BookingWebService.Models
+﻿using System.Text.Json.Serialization;
+
+namespace BookingWebService.Models
 {
     public class User
     {
-        public int UserId { get; set; }
+        [JsonIgnore]
+        public int Id { get; set; }
 
-        public string? Login { get; set; } = string.Empty;
+        public string Login { get; set; } = string.Empty;
 
+        [JsonIgnore]
         public byte[]? PasswordHash { get; set; }
 
+        [JsonIgnore]
         public byte[]? PasswordSalt { get; set; }
 
-        public List<Hotel>? HotelList { get; set; }
+        [JsonIgnore]
+        public List<Hotel> Hotels { get; set; } = new List<Hotel>();
 
     }
 }

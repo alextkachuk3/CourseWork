@@ -13,22 +13,79 @@ namespace BookingWebService.Services.HotelNumberService
         }
         public void AddHotelNumber(HotelNumber hotelNumber)
         {
-            throw new NotImplementedException();
+            try
+            {
+                _dbContext.HotelNumbers?.Add(hotelNumber);
+            }
+            catch
+            {
+                throw;
+            }
+            finally
+            {
+                _dbContext.SaveChanges();
+            }
         }
 
-        public bool CheckHotelStatus(int Id)
+        public bool CheckHotelStatus(int id)
         {
-            throw new NotImplementedException();
+            var hotelNumber = _dbContext.HotelNumbers?.Where(h => h.Id.Equals(id)).FirstOrDefault();
+
+            if(hotelNumber == null)
+            {
+                return false;
+            }
+            else
+            {
+                return hotelNumber.IsFree;
+            }
+                
         }
 
-        public void RemoveHotelNumber(int Id)
+        public void RemoveHotelNumber(int id)
         {
-            throw new NotImplementedException();
+            var hotelNumber = _dbContext.HotelNumbers.Where(h => h.Id.Equals(id)).FirstOrDefault();
+            
+            try
+            {
+                if(hotelNumber != null)
+                {
+                    _dbContext.HotelNumbers.Remove(hotelNumber);
+                    // hotelNumber?.Hotel?.HotelNumbers.Remove(hotelNumber);
+                    
+                }                
+            }
+            catch
+            {
+                throw;
+            }
+            finally
+            {
+                _dbContext.SaveChanges();
+            }
+
+            
         }
 
-        public void UpdateHotelStatus(int Id, bool status)
+        public void UpdateHotelStatus(int id, bool status)
         {
-            throw new NotImplementedException();
+            var hotelNumber = _dbContext.HotelNumbers.Where(h => h.Id.Equals(id)).FirstOrDefault();
+
+            try
+            {
+                if(hotelNumber != null)
+                {
+                    hotelNumber.IsFree = status;
+                }
+            }
+            catch
+            {
+                throw;
+            }
+            finally
+            {
+                _dbContext.SaveChanges();
+            }
         }
     }
 }

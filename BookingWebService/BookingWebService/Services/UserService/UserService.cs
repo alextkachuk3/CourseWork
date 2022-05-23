@@ -30,9 +30,9 @@ namespace BookingWebService.Services.UserService
             }
         }
 
-        public User FindUser(string login)
+        public User? FindUser(string? login)
         {
-            return _dbContext.Users.Where(i => i.Login.Equals(login)).FirstOrDefault();
+            return _dbContext.Users.Where(i => i.Login.Equals(login)).First();
         }
 
         public int GetId()
@@ -43,7 +43,7 @@ namespace BookingWebService.Services.UserService
                 login = _httpContextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.Name);
             }
 
-            return _dbContext.Users.Where(i => i.Login.Equals(login)).FirstOrDefault().UserId;
+            return _dbContext.Users.Where(i => i.Login.Equals(login)).FirstOrDefault().Id;
         }
 
         public string GetLogin()
@@ -55,6 +55,11 @@ namespace BookingWebService.Services.UserService
             }
 
             return result;
+        }
+
+        public User? GetUser()
+        {
+            return _dbContext.Users.Where(i => i.Login.Equals(_httpContextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.Name))).FirstOrDefault();
         }
     }
 }

@@ -10,5 +10,7 @@ namespace BookingWebService.Services.HotelService
 
         public List<int> GetOwnHotelIdList();
 
+        public Hotel GetHotelById(int HotelId);
+
     }
 }

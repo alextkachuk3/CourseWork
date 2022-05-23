@@ -28,8 +28,8 @@ namespace BookingWebService.Controllers
             hotel.Name = request.Name;
             hotel.City = request.City;
             hotel.Address = request.Address;
-            hotel.UserId = _userService.GetId();
-            hotel.HotelNumbers = new List<HotelNumber>();
+            hotel.User = _userService.GetUser();
+
 
             _hotelService.AddHotel(hotel);
 

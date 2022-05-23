@@ -8,8 +8,10 @@ namespace BookingWebService.Services.UserService
 
         int GetId();
 
+        public User? GetUser();
+
         public void AddUser(User user);
 
-        public User FindUser(string login);
+        public User? FindUser(string login);
     }
 }

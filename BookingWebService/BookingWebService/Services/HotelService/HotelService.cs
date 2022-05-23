@@ -1,4 +1,5 @@
 ﻿using BookingWebService.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace BookingWebService.Services.HotelService
 {
@@ -27,11 +28,16 @@ namespace BookingWebService.Services.HotelService
             }
         }
 
+        public Hotel GetHotelById(int Id)
+        {
+            return _dbContext.Hotels.Where(h => h.Id.Equals(Id)).Include(h => h.User).FirstOrDefault();
+        }
+
         public List<int> GetOwnHotelIdList()
         {
             List<int> result = new List<int>();
-            foreach (Hotel hotel in _dbContext.Hotels.Where(i => i.UserId.Equals(_userService.GetId())))
-                result.Add(hotel.HotelId);
+            foreach (Hotel hotel in _dbContext.Hotels.Where(h => h.User.Id.Equals(_userService.GetId())))
+                result.Add(hotel.Id);
             return result;
         }
 
@@ -39,11 +45,16 @@ namespace BookingWebService.Services.HotelService
         {
             try
             {
-                var item_to_remove = _dbContext.Hotels?.Where(i => i.HotelId.Equals(Id)).FirstOrDefault();
+                var itemToRemove = _dbContext.Hotels.Where(i => i.Id.Equals(Id)).FirstOrDefault();
 
-                if (item_to_remove != null)
+                if (itemToRemove != null)
                 {
-                    _dbContext.Hotels?.Remove(item_to_remove);
+                    foreach (var hotelNumber in itemToRemove.HotelNumbers)
+                    {
+                        _dbContext.HotelNumbers.Remove(hotelNumber);
+                    }
+                        
+                    _dbContext.Hotels.Remove(itemToRemove);
                 }
             }
             catch
