@@ -8,5 +8,7 @@ namespace BookingWebService.Services.HotelService
 
         public void RemoveHotel(int Id);
 
+        public List<int> GetOwnHotelIdList();
+
     }
 }
