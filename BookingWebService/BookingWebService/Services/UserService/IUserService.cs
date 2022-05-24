@@ -13,5 +13,6 @@ namespace BookingWebService.Services.UserService
         public void AddUser(User user);
 
         public User? FindUser(string login);
+
     }
 }

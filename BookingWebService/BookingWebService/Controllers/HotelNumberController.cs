@@ -28,14 +28,14 @@ namespace BookingWebService.Controllers
         [HttpPost("add_hotel_number"), Authorize]
         public async Task<ActionResult<HotelNumber>> AddHotelNumber(HotelNumberDto request)
         {
-            Hotel hotel = _hotelService.GetHotelById(request.HotelId);
+            Hotel? hotel = _hotelService.GetHotelById(request.HotelId);
 
             if(hotel == null)
             {
                 return NotFound("Hotel with id " + request.HotelId + " does not exists");
             }
             
-            if(hotel.User.Login != _userService.GetLogin())
+            if(hotel.User?.Login != _userService.GetLogin())
             {
                 return BadRequest("You are not owner of hotel with id " + request.HotelId);
             }

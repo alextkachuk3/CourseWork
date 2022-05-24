@@ -18,5 +18,8 @@ namespace BookingWebService.Models
         [JsonIgnore]
         public List<Hotel> Hotels { get; set; } = new List<Hotel>();
 
+        [JsonIgnore]
+        public List<Image> Images { get; set; } = new List<Image>();
+
     }
 }

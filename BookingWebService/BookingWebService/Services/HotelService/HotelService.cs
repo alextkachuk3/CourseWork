@@ -28,7 +28,7 @@ namespace BookingWebService.Services.HotelService
             }
         }
 
-        public Hotel GetHotelById(int Id)
+        public Hotel? GetHotelById(int Id)
         {
             return _dbContext.Hotels.Where(h => h.Id.Equals(Id)).Include(h => h.User).FirstOrDefault();
         }

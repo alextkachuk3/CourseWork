@@ -1,4 +1,5 @@
 ﻿using BookingWebService.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace BookingWebService.Services.HotelNumberService
 {
@@ -40,6 +41,11 @@ namespace BookingWebService.Services.HotelNumberService
                 return hotelNumber.IsFree;
             }
                 
+        }
+
+        public HotelNumber? GetHotelNumberById(int id)
+        {
+            return _dbContext.HotelNumbers.Where(h => h.Id.Equals(id)).Include(h => h.Hotel).Include(h => h.Hotel.User).FirstOrDefault();
         }
 
         public void RemoveHotelNumber(int id)

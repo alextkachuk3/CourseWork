@@ -1,4 +1,6 @@
-﻿namespace BookingWebService.Models
+﻿using System.Text.Json.Serialization;
+
+namespace BookingWebService.Models
 {
     public class Image
     {
@@ -6,6 +8,10 @@
 
         public byte[]? ImageData { get; set; }
 
-        List<HotelNumber> HotelNumbers { get; set; } = new List<HotelNumber>();
+        [JsonIgnore]
+        public User? User { get; set; }
+
+        [JsonIgnore]
+        public HotelNumber? HotelNumber { get; set; }
     }
 }

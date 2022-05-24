@@ -43,7 +43,16 @@ namespace BookingWebService.Services.UserService
                 login = _httpContextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.Name);
             }
 
-            return _dbContext.Users.Where(i => i.Login.Equals(login)).FirstOrDefault().Id;
+            User? user = _dbContext.Users.Where(i => i.Login.Equals(login)).FirstOrDefault();
+
+            if (user == null)
+            {
+                return 0;
+            }
+            else
+            {
+                return user.Id;
+            }
         }
 
         public string GetLogin()

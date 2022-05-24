@@ -16,9 +16,6 @@ namespace BookingWebService.Models
         public bool IsFree { get; set; }
 
         [JsonIgnore]
-        public int UserId { get; set; }
-
-        [JsonIgnore]
         public Hotel? Hotel { get; set; }
 
         [JsonIgnore]

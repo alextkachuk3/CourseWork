@@ -2,6 +2,7 @@
 using BookingWebService.Models;
 using BookingWebService.Services.HotelNumberService;
 using BookingWebService.Services.HotelService;
+using BookingWebService.Services.ImageService;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -16,6 +17,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IHotelService, HotelService>();
 builder.Services.AddScoped<IHotelNumberService, HotelNumberService>();
+builder.Services.AddScoped<IImageService, ImageService>();
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddSwaggerGen(options =>
 {
