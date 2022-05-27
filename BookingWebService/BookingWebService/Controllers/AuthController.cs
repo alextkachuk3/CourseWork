@@ -39,7 +39,15 @@ namespace BookingWebService.Controllers
             user.PasswordHash = passwordHash;
             user.PasswordSalt = passwordSalt;
 
-            _userService.AddUser(user);
+            try
+            {
+                _userService.AddUser(user);
+            }
+            catch(Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            
 
             return Ok(user);
         }

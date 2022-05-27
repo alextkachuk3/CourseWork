@@ -16,6 +16,10 @@ namespace BookingWebService.Services.UserService
 
         public void AddUser(User user)
         {
+            if(_dbContext.Users.Where(u => u.Login.Equals(user.Login)).Count() > 0)
+            {
+                throw new Exception("User with login " + user.Login + " already exists");
+            }
             try
             {
                 _dbContext.Users?.Add(user);

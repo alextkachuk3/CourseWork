@@ -1,5 +1,4 @@
-﻿using BookingWebService.Controllers.Models;
-using BookingWebService.Models;
+﻿using BookingWebService.Models;
 using BookingWebService.Services.HotelNumberService;
 using BookingWebService.Services.HotelService;
 using Microsoft.AspNetCore.Authorization;
