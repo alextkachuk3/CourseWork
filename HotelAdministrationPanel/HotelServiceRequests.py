@@ -27,6 +27,17 @@ class HotelServiceRequests:
             "password": password
         })
         headers = {"Content-Type": "application/json"}
-        reply = requests.get(url=URL + '/api/Auth/login', data=data, headers=headers, verify=verify)
+        reply = requests.post(url=URL + '/api/Auth/login', data=data, headers=headers, verify=verify)
         print(reply.text)
         self.token = reply.text
+
+    def add_hotel(self, name, city, address):
+        data = json.dumps({
+            "name": name,
+            "city": city,
+            "address": address
+        })
+        headers = {"Content-Type": "application/json",
+                   "Authorization": "bearer %s" % self.token}
+        reply = requests.post(url=URL + '/api/Hotel/add_hotel', data=data, headers=headers, verify=verify)
+        print(reply.json())

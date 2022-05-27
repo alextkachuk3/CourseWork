@@ -52,7 +52,7 @@ namespace BookingWebService.Controllers
             return Ok(user);
         }
 
-        [HttpGet("login")]
+        [HttpPost("login")]
         public async Task<ActionResult<string>> Login(UserDto request)
         {
             User? user = _userService.FindUser(request.Login);
