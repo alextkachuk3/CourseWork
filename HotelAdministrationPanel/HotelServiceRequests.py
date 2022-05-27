@@ -41,3 +41,4 @@ class HotelServiceRequests:
                    "Authorization": "bearer %s" % self.token}
         reply = requests.post(url=URL + '/api/Hotel/add_hotel', data=data, headers=headers, verify=verify)
         print(reply.json())
+        
