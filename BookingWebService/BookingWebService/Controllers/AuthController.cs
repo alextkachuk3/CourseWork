@@ -45,14 +45,14 @@ namespace BookingWebService.Controllers
             }
             catch(Exception ex)
             {
-                return BadRequest(ex.Message);
+                return BadRequest(new { BadRequest = ex.Message });
             }
             
 
             return Ok(user);
         }
 
-        [HttpPost("login")]
+        [HttpGet("login")]
         public async Task<ActionResult<string>> Login(UserDto request)
         {
             User? user = _userService.FindUser(request.Login);
