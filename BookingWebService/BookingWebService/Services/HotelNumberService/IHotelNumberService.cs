@@ -6,15 +6,13 @@ namespace BookingWebService.Services.HotelNumberService
     {
         public void AddHotelNumber(HotelNumber hotelNumber);
 
-        public HotelNumber? GetHotelNumberById(int id);
+        public HotelNumber? GetHotelNumberById(int hotelNumberId);
 
         public List<HotelNumber> GetRandomHotelNumbers(int hotelNumberCount);
 
-        public void RemoveHotelNumber(int id);
+        public void RemoveHotelNumber(int hotelNumberId);
 
-        public bool CheckHotelStatus(int id);
-
-        public void UpdateHotelStatus(int id, bool status);
+        public void AddBookingOrder(int hotelNumberId, BookingOrder bookingOrder);
 
     }
 }

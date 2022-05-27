@@ -13,13 +13,13 @@ namespace BookingWebService.Models
         public string Description { get; set; } = string.Empty;
 
         [JsonIgnore]
-        public bool IsFree { get; set; }
-
-        [JsonIgnore]
         public Hotel? Hotel { get; set; }
 
         [JsonIgnore]
         public List<Image> Images { get; set; } = new List<Image>();
+
+        [JsonIgnore]
+        public List<BookingOrder> BookingOrders { get; set; } = new List<BookingOrder>();
 
     }
 }

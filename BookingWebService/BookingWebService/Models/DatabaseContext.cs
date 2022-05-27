@@ -7,7 +7,6 @@ namespace BookingWebService.Models
         public DatabaseContext(DbContextOptions<DatabaseContext> options)
             : base(options)
         {
-            // Database.EnsureDeleted();
 
             Database.EnsureCreated();
         }
@@ -19,6 +18,8 @@ namespace BookingWebService.Models
         public virtual DbSet<HotelNumber> HotelNumbers { get; set; }
 
         public virtual DbSet<Image> Images { get; set; }
+
+        public virtual DbSet<BookingOrder> BookingOrders { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -49,6 +50,12 @@ namespace BookingWebService.Models
             modelBuilder.Entity<Image>(entity =>
             {
                 entity.ToTable("Images");
+                entity.HasKey("Id");
+            });
+
+            modelBuilder.Entity<BookingOrder>(entity =>
+            {
+                entity.ToTable("BookingOrders");
                 entity.HasKey("Id");
             });
 

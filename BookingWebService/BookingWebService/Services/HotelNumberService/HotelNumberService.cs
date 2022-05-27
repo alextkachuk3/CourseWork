@@ -13,6 +13,38 @@ namespace BookingWebService.Services.HotelNumberService
             _dbContext = dbContext;
             _userService = userService;
         }
+
+        public void AddBookingOrder(int hotelNumberId, BookingOrder bookingOrder)
+        {
+            var hotelNumber = _dbContext.HotelNumbers.Where(h => h.Id.Equals(hotelNumberId)).Include(h => h.BookingOrders).FirstOrDefault();
+
+            if (hotelNumber == null)
+            {
+                throw new Exception("There is no hotel room with ID " + hotelNumberId);
+            }
+
+            if (hotelNumber.BookingOrders.Where(
+                    o => o.Year.Equals(bookingOrder.Year) &&
+                    o.Mounth.Equals(bookingOrder.Mounth) &&
+                    o.Year.Equals(bookingOrder.Year)).Count() > 0)
+            {
+                throw new Exception("A booking order already exists for this day!");
+            }
+
+            try
+            {
+                bookingOrder.HotelNumber = hotelNumber;
+            }
+            catch
+            {
+                throw;
+            }
+            finally
+            {
+                _dbContext.SaveChanges();
+            }
+        }
+
         public void AddHotelNumber(HotelNumber hotelNumber)
         {
             try
@@ -29,24 +61,9 @@ namespace BookingWebService.Services.HotelNumberService
             }
         }
 
-        public bool CheckHotelStatus(int id)
+        public HotelNumber? GetHotelNumberById(int hotelNumberId)
         {
-            var hotelNumber = _dbContext.HotelNumbers?.Where(h => h.Id.Equals(id)).FirstOrDefault();
-
-            if(hotelNumber == null)
-            {
-                return false;
-            }
-            else
-            {
-                return hotelNumber.IsFree;
-            }
-                
-        }
-
-        public HotelNumber? GetHotelNumberById(int id)
-        {
-            return _dbContext.HotelNumbers.Where(h => h.Id.Equals(id)).Include(h => h.Hotel).Include(h => h.Hotel.User).FirstOrDefault();
+            return _dbContext.HotelNumbers.Where(h => h.Id.Equals(hotelNumberId)).Include(h => h.Hotel).Include(h => h.Hotel.User).FirstOrDefault();
         }
 
         public List<HotelNumber> GetRandomHotelNumbers(int hotelNumberCount)
@@ -78,9 +95,9 @@ namespace BookingWebService.Services.HotelNumberService
             return result;
         }
 
-        public void RemoveHotelNumber(int id)
+        public void RemoveHotelNumber(int hotelNumberId)
         {
-            var hotelNumber = _dbContext.HotelNumbers.Where(h => h.Id.Equals(id)).FirstOrDefault();
+            var hotelNumber = _dbContext.HotelNumbers.Where(h => h.Id.Equals(hotelNumberId)).FirstOrDefault();
             
             try
             {
@@ -96,30 +113,8 @@ namespace BookingWebService.Services.HotelNumberService
             finally
             {
                 _dbContext.SaveChanges();
-            }
-
-            
+            }            
         }
 
-        public void UpdateHotelStatus(int id, bool status)
-        {
-            var hotelNumber = _dbContext.HotelNumbers.Where(h => h.Id.Equals(id)).FirstOrDefault();
-
-            try
-            {
-                if(hotelNumber != null)
-                {
-                    hotelNumber.IsFree = status;
-                }
-            }
-            catch
-            {
-                throw;
-            }
-            finally
-            {
-                _dbContext.SaveChanges();
-            }
-        }
     }
 }

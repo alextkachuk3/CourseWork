@@ -1,4 +1,5 @@
-﻿using BookingWebService.Models;
+﻿using BookingWebService.Controllers.Models;
+using BookingWebService.Models;
 using BookingWebService.Services.HotelNumberService;
 using BookingWebService.Services.HotelService;
 using Microsoft.AspNetCore.Authorization;
@@ -49,6 +50,28 @@ namespace BookingWebService.Controllers
             _hotelNumberService.AddHotelNumber(hotelNumber);
 
             return Ok(hotelNumber);
+        }
+
+        [HttpPut("update_booking_orders"), Authorize]
+        public async Task<ActionResult<BookingOrder>> AddBookingOrder(BookingOrderDtoHO request)
+        {
+
+            BookingOrder bookingOrder = new BookingOrder();
+
+            bookingOrder.Year = request.Year;
+            bookingOrder.Mounth = request.Mounth;
+            bookingOrder.Day = request.Day;
+
+            try
+            {
+                _hotelNumberService.AddBookingOrder(request.HotelNumberId, bookingOrder);
+            }
+            catch(Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+
+            return Ok(bookingOrder);
         }
     }
 }
