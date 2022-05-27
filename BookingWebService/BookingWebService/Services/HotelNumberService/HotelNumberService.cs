@@ -1,5 +1,6 @@
 ﻿using BookingWebService.Models;
 using Microsoft.EntityFrameworkCore;
+using System.Linq;
 
 namespace BookingWebService.Services.HotelNumberService
 {
@@ -48,6 +49,35 @@ namespace BookingWebService.Services.HotelNumberService
             return _dbContext.HotelNumbers.Where(h => h.Id.Equals(id)).Include(h => h.Hotel).Include(h => h.Hotel.User).FirstOrDefault();
         }
 
+        public List<HotelNumber> GetRandomHotelNumbers(int hotelNumberCount)
+        {
+            if (_dbContext.HotelNumbers.Count() < hotelNumberCount)
+            {
+                //hotelNumberCount = _dbContext.HotelNumbers.Count();
+                return _dbContext.HotelNumbers.Include(h => h.Hotel).Include(h => h.Images).ToList();
+            }
+
+            var random = new Random();
+            HashSet<int> numbers = new HashSet<int>();
+            while (numbers.Count < hotelNumberCount)
+            {
+                numbers.Add(random.Next(0, hotelNumberCount));
+            }
+            
+            List<HotelNumber> result = new List<HotelNumber>();
+
+            foreach (int i in numbers)
+            {
+                HotelNumber? hotelNumber = _dbContext.HotelNumbers.Find(i);
+                if(hotelNumber != null)
+                {
+                    result.Add(hotelNumber);
+                }                
+            }
+
+            return result;
+        }
+
         public void RemoveHotelNumber(int id)
         {
             var hotelNumber = _dbContext.HotelNumbers.Where(h => h.Id.Equals(id)).FirstOrDefault();
@@ -57,8 +87,6 @@ namespace BookingWebService.Services.HotelNumberService
                 if(hotelNumber != null)
                 {
                     _dbContext.HotelNumbers.Remove(hotelNumber);
-                    // hotelNumber?.Hotel?.HotelNumbers.Remove(hotelNumber);
-                    
                 }                
             }
             catch

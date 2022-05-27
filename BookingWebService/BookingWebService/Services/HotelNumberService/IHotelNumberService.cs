@@ -8,6 +8,8 @@ namespace BookingWebService.Services.HotelNumberService
 
         public HotelNumber? GetHotelNumberById(int id);
 
+        public List<HotelNumber> GetRandomHotelNumbers(int hotelNumberCount);
+
         public void RemoveHotelNumber(int id);
 
         public bool CheckHotelStatus(int id);

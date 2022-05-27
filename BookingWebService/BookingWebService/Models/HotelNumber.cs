@@ -20,5 +20,6 @@ namespace BookingWebService.Models
 
         [JsonIgnore]
         public List<Image> Images { get; set; } = new List<Image>();
+
     }
 }
