@@ -1,6 +1,5 @@
-def print_hi(name):
-    print(f'Hi, {name}')
-
+from HotelServiceRequests import HotelServiceRequests
 
 if __name__ == '__main__':
-    print_hi('PyCharm')
+    service = HotelServiceRequests()
+    service.register()
