@@ -44,11 +44,61 @@ class HotelDatabase:
             cursor.execute(get_hotel_numbers_query)
             return cursor.fetchall()
 
-    def get_booking_orders(self, hotel_number_id):
+    def get_booking_orders(self, hotel_number_id, date=None):
         with self.connection.cursor() as cursor:
-            get_hotel_numbers_query = "SELECT * FROM booking_orders WHERE hotel_number_id = %s"
-            cursor.execute(get_hotel_numbers_query, hotel_number_id)
+            if date is None:
+                get_hotel_numbers_query = "SELECT * FROM booking_orders WHERE hotel_number_id = %s"
+                get_hotel_numbers_val = hotel_number_id
+            else:
+                get_hotel_numbers_query = "SELECT * FROM booking_orders " \
+                                          "WHERE hotel_number_id = %s AND year = %s AND month = %s AND day = %s"
+                get_hotel_numbers_val = (hotel_number_id, date.year, date.month. date.day)
+            cursor.execute(get_hotel_numbers_query, get_hotel_numbers_val)
             return cursor.fetchall()
+
+    def get_service_id_hotel_by_id(self, hotel_id):
+        with self.connection.cursor() as cursor:
+            get_hotel_by_id_query = "SELECT booking_service_id FROM hotels WHERE id = %s"
+            cursor.execute(get_hotel_by_id_query, hotel_id)
+            return cursor.fetchone()
+
+    def update_hotel_service_id(self, hotel_id, hotel_service_id):
+        try:
+            with self.connection.cursor() as cursor:
+                update_hotel_service_id_query = "UPDATE hotels SET booking_service_id = %s WHERE id = %s"
+                update_hotel_service_id_val = (hotel_service_id, hotel_id)
+                cursor.execute(update_hotel_service_id_query, update_hotel_service_id_val)
+        finally:
+            self.connection.commit()
+
+    def update_hotel_number_service_id(self, hotel_number_id, hotel_number_service_id):
+        try:
+            with self.connection.cursor() as cursor:
+                update_hotel_number_service_id_query = "UPDATE hotel_numbers SET booking_service_id = %s WHERE id = %s"
+                update_hotel_number_service_id_val = (hotel_number_service_id, hotel_number_id)
+                cursor.execute(update_hotel_number_service_id_query, update_hotel_number_service_id_val)
+        finally:
+            self.connection.commit()
+
+    def update_booking_order_service_id(self, booking_order_id, booking_order_service_id):
+        try:
+            with self.connection.cursor() as cursor:
+                update_booking_order_service_id_query = "UPDATE booking_orders" \
+                                                        " SET booking_service_id = %s" \
+                                                        " WHERE id = %s"
+                update_booking_order_service_id_val = (booking_order_service_id, booking_order_id)
+                cursor.execute(update_booking_order_service_id_query, update_booking_order_service_id_val)
+        finally:
+            self.connection.commit()
+
+    def update_image_service_id(self, image_id, image_service_id):
+        try:
+            with self.connection.cursor() as cursor:
+                update_image_service_id_query = "UPDATE images SET booking_service_id = %s WHERE id = %s"
+                update_image_service_id_val = (image_service_id, image_id)
+                cursor.execute(update_image_service_id_query, update_image_service_id_val)
+        finally:
+            self.connection.commit()
 
     def add_booking_order(self, hotel_number_id, first_name, last_name, date):
         try:
@@ -84,10 +134,10 @@ class HotelDatabase:
                 insert_hotel_number_query = "INSERT INTO hotel_numbers (description, hotel_id) VALUES(%s, %s)"
 
                 for i in range(30):
-                    cursor.execute(insert_hotel_number_query, [lorem.text()[:2000], 1])
+                    cursor.execute(insert_hotel_number_query, [lorem.text()[:400], 1])
 
                 for i in range(10):
-                    cursor.execute(insert_hotel_number_query, [lorem.text()[:2000], 2])
+                    cursor.execute(insert_hotel_number_query, [lorem.text()[:400], 2])
 
                 image_counter = 1
 
@@ -155,7 +205,7 @@ class HotelDatabase:
                 try:
                     create_metro_stations_table_query = "CREATE TABLE hotel_numbers(" \
                                                         "id INT AUTO_INCREMENT PRIMARY KEY, " \
-                                                        "description VARCHAR(2000), " \
+                                                        "description VARCHAR(401), " \
                                                         "hotel_id INT," \
                                                         "booking_service_id INT," \
                                                         "FOREIGN KEY (hotel_id) " \

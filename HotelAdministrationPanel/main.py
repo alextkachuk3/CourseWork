@@ -6,15 +6,37 @@ from HotelServiceRequests import HotelServiceRequests
 
 from config import db_host, db_port, db_user, db_password, db_name
 
+database = HotelDatabase(db_host, db_port, db_user, db_password, db_name)
+service = HotelServiceRequests()
 
-def upload_all_hotel_data(db, hotel_service):
-    print(db.get_booking_orders(0))
+
+def upload_all_hotel_data():
+    hotels = database.get_hotels()
+    for counter, hotel in enumerate(hotels):
+        if hotel[4] is None:
+            reply = service.add_hotel(hotel[1], hotel[2], hotel[3])
+            database.update_hotel_service_id(hotel[0], reply['id'])
+
+    hotel_numbers = database.get_hotel_numbers()
+    for counter, hotel_number in enumerate(hotel_numbers):
+        if hotel_number[3] is None:
+            service_id = database.get_service_id_hotel_by_id(hotel_number[2])[0]
+            reply = service.add_hotel_number(hotel_number[1], service_id)
+            database.update_hotel_number_service_id(hotel_number[0], reply['id'])
+
+    # images = database.get_images()
+    # for counter, image in enumerate(images):
+    #     if image[3] is None:
+    #         reply = service.add_image()
+    #         database.update_image_service_id( reply['id'])
+
+    print(database.get_booking_orders(0))
 
 
 def process_booking(hotel_number_id, date, first_name, last_name, booking_confirm_window, hotel_number_window):
     hotel_number_window.deiconify()
     booking_confirm_window.destroy()
-    print(date)
+    database.add_booking_order(hotel_number_id, first_name, last_name, date)
 
 
 def on_date_panel_closing(window):
@@ -101,8 +123,7 @@ def btn_command(hotel_number_id):
 
 
 if __name__ == '__main__':
-    database = HotelDatabase(db_host, db_port, db_user, db_password, db_name)
-    service = HotelServiceRequests()
+
     service.register()
     service.login()
 
@@ -114,7 +135,7 @@ if __name__ == '__main__':
     # service.add_image(1, images[0][1])
 
     database.generate_db()
-    upload_all_hotel_data(database, service)
+    upload_all_hotel_data()
 
     root = Tk()
 
