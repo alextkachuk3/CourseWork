@@ -45,10 +45,11 @@ def btn_command(q):
 
 if __name__ == '__main__':
     database = HotelDatabase(db_host, db_port, db_user, db_password, db_name)
-    # service = HotelServiceRequests()
-    # service.register()
-    # service.login()
-    # service.add_hotel("Meow", "Meowland", "Wonderstreet 12")
+    service = HotelServiceRequests()
+    service.register()
+    service.login()
+    service.add_hotel("Meow", "Meowland", "Wonderstreet 12")
+    service.add_hotel_number("Very interesting description.", "2")
 
     # database.generate_db()
 
