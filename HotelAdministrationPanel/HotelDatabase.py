@@ -1,5 +1,14 @@
+import os
+
 import pymysql as pymysql
 import lorem
+
+
+def convert_to_binary_data(filename):
+    with open(filename, 'rb') as file:
+        binary_data = file.read()
+    return binary_data
+
 
 class HotelDatabase:
     def __init__(self, db_host, db_port, db_user, db_password, db_name):
@@ -44,6 +53,38 @@ class HotelDatabase:
 
                 for i in range(10):
                     cursor.execute(insert_hotel_number_query, [lorem.text()[:2000], 2])
+
+                image_counter = 1
+
+                insert_image_query = "INSERT INTO images (image_blob, hotel_number_id) VALUES(%s, %s)"
+
+                for i in range(30):
+                    for j in range(5):
+                        cursor.execute(insert_image_query,
+                                       [convert_to_binary_data(os.path.dirname(os.path.abspath(__file__)) +
+                                                               '\\hotel_photos\\'
+                                                               + str(image_counter) +
+                                                               '.jpg'), 1])
+
+                        image_counter = image_counter + 1
+
+                        # 25 count of images in folder
+                        if image_counter == 25:
+                            image_counter = 1
+
+                for i in range(10):
+                    for j in range(5):
+                        cursor.execute(insert_image_query,
+                                       [convert_to_binary_data(os.path.dirname(os.path.abspath(__file__)) +
+                                                               '\\hotel_photos\\'
+                                                               + str(image_counter) +
+                                                               '.jpg'), 2])
+
+                        image_counter = image_counter + 1
+
+                        # 25 count of images in folder
+                        if image_counter == 25:
+                            image_counter = 1
 
             finally:
                 self.connection.commit()
