@@ -108,7 +108,7 @@ class HotelDatabase:
                                                      "name VARCHAR(50)," \
                                                      "city VARCHAR(50)," \
                                                      "address VARCHAR(50)," \
-                                                     "hotel_service_id INT);"
+                                                     "booking_service_id INT);"
                     cursor.execute(create_metro_lines_table_query)
                     print("Hotels table created successfully")
                 except pymysql.err.OperationalError:
@@ -122,6 +122,7 @@ class HotelDatabase:
                                                         "id INT AUTO_INCREMENT PRIMARY KEY, " \
                                                         "description VARCHAR(2000), " \
                                                         "hotel_id INT," \
+                                                        "booking_service_id INT," \
                                                         "FOREIGN KEY (hotel_id) " \
                                                         "REFERENCES hotels(id) " \
                                                         "ON UPDATE CASCADE ON DELETE CASCADE);"
@@ -138,6 +139,7 @@ class HotelDatabase:
                                                         "id INT AUTO_INCREMENT PRIMARY KEY, " \
                                                         "image_blob LONGBLOB," \
                                                         "hotel_number_id INT," \
+                                                        "booking_service_id INT," \
                                                         "FOREIGN KEY (hotel_number_id) " \
                                                         "REFERENCES hotel_numbers(id) " \
                                                         "ON UPDATE CASCADE ON DELETE CASCADE);"
@@ -154,7 +156,11 @@ class HotelDatabase:
                                                         "id INT AUTO_INCREMENT PRIMARY KEY, " \
                                                         "first_name VARCHAR(100)," \
                                                         "last_name VARCHAR(100)," \
+                                                        "year INT," \
+                                                        "month INT," \
+                                                        "day INT," \
                                                         "hotel_number_id INT," \
+                                                        "booking_service_id INT," \
                                                         "FOREIGN KEY (hotel_number_id) " \
                                                         "REFERENCES hotel_numbers(id) " \
                                                         "ON UPDATE CASCADE ON DELETE CASCADE);"
