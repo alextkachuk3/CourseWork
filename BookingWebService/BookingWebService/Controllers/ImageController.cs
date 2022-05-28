@@ -50,7 +50,7 @@ namespace BookingWebService.Controllers
 
             _imageService.AddImage(image);
 
-            return Ok(hotelNumber);
+            return Ok(image);
         }
 
     }

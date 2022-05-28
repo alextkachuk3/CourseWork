@@ -32,6 +32,35 @@ class HotelDatabase:
             cursor.execute(get_images_query)
             return cursor.fetchall()
 
+    def get_hotels(self):
+        with self.connection.cursor() as cursor:
+            get_hotels_query = "SELECT * FROM hotels"
+            cursor.execute(get_hotels_query)
+            return cursor.fetchall()
+
+    def get_hotel_numbers(self):
+        with self.connection.cursor() as cursor:
+            get_hotel_numbers_query = "SELECT * FROM hotel_numbers"
+            cursor.execute(get_hotel_numbers_query)
+            return cursor.fetchall()
+
+    def get_booking_orders(self, hotel_number_id):
+        with self.connection.cursor() as cursor:
+            get_hotel_numbers_query = "SELECT * FROM booking_orders WHERE hotel_number_id = %s"
+            cursor.execute(get_hotel_numbers_query, hotel_number_id)
+            return cursor.fetchall()
+
+    def add_booking_order(self, hotel_number_id, first_name, last_name, date):
+        try:
+            with self.connection.cursor() as cursor:
+                add_booking_order_query = \
+                    "INSERT INTO booking_orders (first_name, last_name, year, month, day, hotel_number_id)" \
+                    " VALUES (%s, %s, %s, %s, %s, %s) "
+                add_booking_order_val = (first_name, last_name, date.year, date.month, date.day, hotel_number_id)
+                cursor.execute(add_booking_order_query, add_booking_order_val)
+        finally:
+            self.connection.commit()
+
     def generate_db(self):
         with self.connection.cursor() as cursor:
             try:
