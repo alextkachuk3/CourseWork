@@ -49,7 +49,8 @@ if __name__ == '__main__':
     service.register()
     service.login()
     service.add_hotel("Meow", "Meowland", "Wonderstreet 12")
-    service.add_hotel_number("Very interesting description.", "2")
+    service.add_hotel_number("Very interesting description.", 1)
+    service.add_booking_order(1, datetime.now())
 
     # database.generate_db()
 
