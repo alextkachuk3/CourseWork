@@ -51,14 +51,14 @@ namespace BookingWebService.Controllers
             return Ok(hotelNumber);
         }
 
-        [HttpPut("update_booking_orders"), Authorize]
+        [HttpPut("add_booking_order"), Authorize]
         public async Task<ActionResult<BookingOrder>> AddBookingOrder(BookingOrderDtoHO request)
         {
 
             BookingOrder bookingOrder = new BookingOrder();
 
             bookingOrder.Year = request.Year;
-            bookingOrder.Mounth = request.Mounth;
+            bookingOrder.Month = request.Month;
             bookingOrder.Day = request.Day;
 
             try

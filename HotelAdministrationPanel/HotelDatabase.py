@@ -26,6 +26,12 @@ class HotelDatabase:
         self.connection.close()
         print('Connection to MySQL database closed...')
 
+    def get_images(self):
+        with self.connection.cursor() as cursor:
+            get_images_query = "SELECT * FROM images"
+            cursor.execute(get_images_query)
+            return cursor.fetchall()
+
     def generate_db(self):
         with self.connection.cursor() as cursor:
             try:

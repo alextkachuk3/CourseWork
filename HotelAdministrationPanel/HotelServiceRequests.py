@@ -1,3 +1,4 @@
+import base64
 import json
 
 import requests
@@ -63,4 +64,16 @@ class HotelServiceRequests:
         headers = {"Content-Type": "application/json",
                    "Authorization": "bearer %s" % self.token}
         reply = requests.put(url=URL + '/api/HotelNumber/add_booking_order', data=data, headers=headers, verify=verify)
+        print(reply.json())
+
+    def add_image(self, hotel_number_id, image):
+        base64_img = base64.encodebytes(image).decode('utf-8')
+        data = json.dumps({
+            "hotelNumberId": hotel_number_id,
+            "base64ImageData": base64_img
+        })
+        headers = {"Content-Type": "application/json",
+                   "Authorization": "bearer %s" % self.token}
+        reply = requests.post(url=URL + '/api/Image/add_image', data=data, headers=headers, verify=verify)
+        print(reply)
         print(reply.json())

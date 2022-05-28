@@ -8,7 +8,7 @@ namespace BookingWebService.Models
 
         public int Year { get; set; }
 
-        public int Mounth { get; set; }
+        public int Month { get; set; }
 
         public int Day { get; set; }
 
