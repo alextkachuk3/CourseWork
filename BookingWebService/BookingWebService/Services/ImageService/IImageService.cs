@@ -6,7 +6,9 @@ namespace BookingWebService.Services.ImageService
     {
         public void AddImage(Image image);
 
-        public byte[]? GetImage(int id);
+        public string? GetImage(int id);
+
+        public List<string> GetHotelNumberImagesList(int hotelNumberId);
 
     }
 }

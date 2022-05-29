@@ -135,7 +135,7 @@ if __name__ == '__main__':
     service.register()
     service.login()
 
-    database.generate_db()
+    # database.generate_db()
     upload_all_hotel_data()
 
     root = Tk()

@@ -44,7 +44,7 @@ namespace BookingWebService.Controllers
 
             var image = new Image();
 
-            image.ImageData = Encoding.UTF8.GetBytes(request.Base64ImageData);
+            image.ImageData = request.Base64ImageData.Replace("\n", "");
             image.User = user;
             image.HotelNumber = hotelNumber;
 

@@ -25,7 +25,15 @@ namespace BookingWebService.Services.ImageService
             }
         }
 
-        public byte[]? GetImage(int id)
+        public List<string> GetHotelNumberImagesList(int hotelNumberId)
+        {
+            var images =  from image in _dbContext.Images
+                   where image.HotelNumber.Id == hotelNumberId
+                   select image.ImageData;
+            return images.ToList();
+        }
+
+        public string? GetImage(int id)
         {
             Image? image = _dbContext.Images.Where(i => i.Id.Equals(id)).FirstOrDefault();
             if(image == null)

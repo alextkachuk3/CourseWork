@@ -6,7 +6,7 @@ namespace BookingWebService.Models
     {
         public int Id { get; set; }
 
-        public byte[]? ImageData { get; set; }
+        public string ImageData { get; set; } = string.Empty;
 
         [JsonIgnore]
         public User? User { get; set; }
