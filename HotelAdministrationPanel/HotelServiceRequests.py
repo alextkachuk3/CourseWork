@@ -56,12 +56,12 @@ class HotelServiceRequests:
         print(reply.json())
         return reply.json()
 
-    def add_booking_order(self, hotel_number_id, date):
+    def add_booking_order(self, hotel_number_id, year, month, day):
         data = json.dumps({
             "hotelNumberId": hotel_number_id,
-            "year": date.year,
-            "month": date.month,
-            "day": date.day
+            "year": year,
+            "month": month,
+            "day": day
         })
         headers = {"Content-Type": "application/json",
                    "Authorization": "bearer %s" % self.token}

@@ -12,31 +12,39 @@ service = HotelServiceRequests()
 
 def upload_all_hotel_data():
     hotels = database.get_hotels()
-    for counter, hotel in enumerate(hotels):
+    for hotel in hotels:
         if hotel[4] is None:
             reply = service.add_hotel(hotel[1], hotel[2], hotel[3])
             database.update_hotel_service_id(hotel[0], reply['id'])
 
     hotel_numbers = database.get_hotel_numbers()
-    for counter, hotel_number in enumerate(hotel_numbers):
+    for hotel_number in hotel_numbers:
         if hotel_number[3] is None:
             service_id = database.get_service_id_hotel_by_id(hotel_number[2])[0]
             reply = service.add_hotel_number(hotel_number[1], service_id)
             database.update_hotel_number_service_id(hotel_number[0], reply['id'])
 
-    # images = database.get_images()
-    # for counter, image in enumerate(images):
-    #     if image[3] is None:
-    #         reply = service.add_image()
-    #         database.update_image_service_id( reply['id'])
+    images = database.get_images()
+    for image in images:
+        if image[3] is None:
+            service_id = database.get_service_id_hotel_number_by_id(image[2])[0]
+            reply = service.add_image(service_id, image[1])
+            database.update_image_service_id(image[0], reply['id'])
 
-    print(database.get_booking_orders(0))
+    booking_orders = database.get_booking_orders()
+    for booking_order in booking_orders:
+        if booking_order[7] is None:
+            service_id = database.get_service_id_hotel_number_by_id(booking_order[6])[0]
+            reply = service.add_booking_order(service_id, booking_order[3], booking_order[4], booking_order[5])
+            database.update_booking_order_service_id(booking_order[0], reply['id'])
+
 
 
 def process_booking(hotel_number_id, date, first_name, last_name, booking_confirm_window, hotel_number_window):
     hotel_number_window.deiconify()
     booking_confirm_window.destroy()
     database.add_booking_order(hotel_number_id, first_name, last_name, date)
+    upload_all_hotel_data()
 
 
 def on_date_panel_closing(window):
@@ -126,13 +134,6 @@ if __name__ == '__main__':
 
     service.register()
     service.login()
-
-    images = database.get_images()
-
-    # service.add_hotel("Meow", "Meowland", "Wonderstreet 12")
-    # service.add_hotel_number("Very interesting description.", 1)
-    # service.add_booking_order(1, datetime.now())
-    # service.add_image(1, images[0][1])
 
     database.generate_db()
     upload_all_hotel_data()

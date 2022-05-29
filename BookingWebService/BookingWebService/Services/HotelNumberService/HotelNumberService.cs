@@ -24,9 +24,10 @@ namespace BookingWebService.Services.HotelNumberService
             }
 
             if (hotelNumber.BookingOrders.Where(
-                    o => o.Year.Equals(bookingOrder.Year) &&
+                    o =>
+                    o.Year.Equals(bookingOrder.Year) &&
                     o.Month.Equals(bookingOrder.Month) &&
-                    o.Year.Equals(bookingOrder.Year)).Count() > 0)
+                    o.Day.Equals(bookingOrder.Day)).FirstOrDefault() != null)
             {
                 throw new Exception("A booking order already exists for this day!");
             }

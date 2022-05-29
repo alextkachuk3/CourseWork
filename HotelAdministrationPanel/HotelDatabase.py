@@ -44,7 +44,13 @@ class HotelDatabase:
             cursor.execute(get_hotel_numbers_query)
             return cursor.fetchall()
 
-    def get_booking_orders(self, hotel_number_id, date=None):
+    def get_booking_orders(self):
+        with self.connection.cursor() as cursor:
+            get_hotel_numbers_query = "SELECT * FROM booking_orders"
+            cursor.execute(get_hotel_numbers_query)
+            return cursor.fetchall()
+
+    def get_hotel_number_booking_orders(self, hotel_number_id, date=None):
         with self.connection.cursor() as cursor:
             if date is None:
                 get_hotel_numbers_query = "SELECT * FROM booking_orders WHERE hotel_number_id = %s"
@@ -60,6 +66,12 @@ class HotelDatabase:
         with self.connection.cursor() as cursor:
             get_hotel_by_id_query = "SELECT booking_service_id FROM hotels WHERE id = %s"
             cursor.execute(get_hotel_by_id_query, hotel_id)
+            return cursor.fetchone()
+
+    def get_service_id_hotel_number_by_id(self, hotel_number_id):
+        with self.connection.cursor() as cursor:
+            get_hotel_by_id_query = "SELECT booking_service_id FROM hotel_numbers WHERE id = %s"
+            cursor.execute(get_hotel_by_id_query, hotel_number_id)
             return cursor.fetchone()
 
     def update_hotel_service_id(self, hotel_id, hotel_service_id):
@@ -149,7 +161,7 @@ class HotelDatabase:
                                        [convert_to_binary_data(os.path.dirname(os.path.abspath(__file__)) +
                                                                '\\hotel_photos\\'
                                                                + str(image_counter) +
-                                                               '.jpg'), 1])
+                                                               '.jpg'), i+1])
 
                         image_counter = image_counter + 1
 
@@ -163,7 +175,7 @@ class HotelDatabase:
                                        [convert_to_binary_data(os.path.dirname(os.path.abspath(__file__)) +
                                                                '\\hotel_photos\\'
                                                                + str(image_counter) +
-                                                               '.jpg'), 2])
+                                                               '.jpg'), i + 31])
 
                         image_counter = image_counter + 1
 
