@@ -2,27 +2,18 @@
 @model List<HotelNumber>
 
 @{
-    Layout = null;
+    Layout = "_Layout";
 }
-<!doctype html>
-<html>
-<head>
-    <title>Hotel Web Service</title>
-    <meta charset="utf-8" />
-    <link rel="stylesheet" href="~/css/bootstrap.min.css" />
-</head>
-<body>
-    <h2>Hello World!</h2>
-     @foreach(var hotelNumber in Model)
-     {
-       
-        <div>
-            <p>ID: @hotelNumber.Id</p>
-            <p>Hotel: @hotelNumber.Hotel.Name</p>
-            <img src="@string.Format("data:image/png;base64,{0}", hotelNumber.Images[0].ImageData)">
-        </div>        
-     }
 
-     <script src="~/js/bootstrap.bundle.min.js"></script>
-</body>
-</html>
+<h2>Hello World!</h2>
+@foreach (var hotelNumber in Model)
+{
+
+    <div>
+        <p>ID: @hotelNumber.Id</p>
+        <p>Hotel: @hotelNumber.Hotel.Name</p>
+        <img src="@string.Format("data:image/png;base64,{0}", hotelNumber.Images[0].ImageData)">
+    </div>
+}
+
+<script src="~/js/bootstrap.bundle.min.js"></script>

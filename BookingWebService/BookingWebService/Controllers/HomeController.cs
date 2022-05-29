@@ -16,6 +16,13 @@ namespace BookingWebService.Controllers
         public IActionResult Index()
         {
             var hotelNumbers = _hotelNumber.GetRandomHotelNumbers(10);
+            foreach (var hotelNumber in hotelNumbers)
+            {
+                if(hotelNumber.Images.Count > 0)
+                {
+                    
+                }
+            }
             return View(hotelNumbers);
         }
     }
