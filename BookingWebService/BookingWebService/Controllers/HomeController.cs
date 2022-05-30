@@ -1,4 +1,6 @@
 ﻿using BookingWebService.Services.HotelNumberService;
+using BookingWebService.Services.ImageService;
+using BookingWebService.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BookingWebService.Controllers
@@ -7,23 +9,37 @@ namespace BookingWebService.Controllers
     {
 
         private readonly IHotelNumberService _hotelNumber;
+        private readonly IImageService _imageService;
 
-        public HomeController(IHotelNumberService hotelNumber)
+        public HomeController(IHotelNumberService hotelNumber, IImageService imageService)
         {
             _hotelNumber = hotelNumber;
+            _imageService = imageService;
+        }
+
+        //public string Number(int id) => $"Number Id: {id}";
+
+        public IActionResult Number(int id)
+        {
+            return View();
         }
 
         public IActionResult Index()
         {
-            var hotelNumbers = _hotelNumber.GetRandomHotelNumbers(10);
-            foreach (var hotelNumber in hotelNumbers)
+            var hotelNumbersView = new List<HotelNumberViewModel>(); 
+            var hotelNumbers = _hotelNumber.GetRandomHotelNumbers(6);
+            
+            for(int i = 0; i < hotelNumbers.Count; i++)
             {
-                if(hotelNumber.Images.Count > 0)
-                {
-                    
-                }
+                var hotelNumber = new HotelNumberViewModel();
+                hotelNumber.HotelName = hotelNumbers[i].Hotel.Name;
+                hotelNumber.Id = hotelNumbers[i].Id;
+                hotelNumber.Image = _imageService.GetFirstHotelNumberImage(hotelNumber.Id);
+                hotelNumbersView.Add(hotelNumber);
             }
-            return View(hotelNumbers);
+            
+
+            return View(hotelNumbersView);
         }
     }
 }

@@ -8,7 +8,7 @@ namespace BookingWebService.Services.ImageService
 
         public string? GetImage(int id);
 
-        public List<string> GetHotelNumberImagesList(int hotelNumberId);
+        public string? GetFirstHotelNumberImage(int hotelNumberId);
 
     }
 }

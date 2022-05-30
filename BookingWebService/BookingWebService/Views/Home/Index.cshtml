@@ -1,19 +1,35 @@
-﻿@using BookingWebService.Models
-@model List<HotelNumber>
+﻿@using BookingWebService.ViewModels
+@model List<HotelNumberViewModel>
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 
 @{
     Layout = "_Layout";
+    var hotelNumbers = Model.ToArray();
 }
 
 <h2>Hello World!</h2>
-@foreach (var hotelNumber in Model)
-{
+<div class="container">
 
-    <div>
-        <p>ID: @hotelNumber.Id</p>
-        <p>Hotel: @hotelNumber.Hotel.Name</p>
-        <img src="@string.Format("data:image/png;base64,{0}", hotelNumber.Images[0].ImageData)">
-    </div>
-}
+    @for (int i = 0; i < 2 && i < hotelNumbers.Count() / 3; i++)
+    {
+        <div class="row">
 
-<script src="~/js/bootstrap.bundle.min.js"></script>
+            @for (int j = 0; j < 3; j++)
+            {
+                <div class="col-sm-4">
+                    <img src="@string.Format("data:image/png;base64,{0}", @hotelNumbers[i*3 + j].Image)" class="img-thumbnail">
+                    <div class="row">
+                        <div class="col-sm-8">
+                            <p>Hotel: @hotelNumbers[i*3 + j].HotelName</p>
+                        </div>
+                        <div class="col-sm-4">
+                            <a type="button" class="btn btn-primary" asp-controller="Home" asp-action="Number" asp-route-id="@hotelNumbers[i*3 + j].Id">Details</a>
+                        </div>
+                    </div>
+                </div>
+            }
+
+        </div>
+    }
+</div>
+

@@ -1,6 +1,6 @@
 ﻿namespace BookingWebService.ViewModels
 {
-    public class HotelNumbersViewModel
+    public class HotelNumberViewModel
     {
         public int Id { get; set; }
 
