@@ -80,8 +80,4 @@ app.MapControllerRoute(name: "hotelnumberpage",
                 pattern: "hotelnumberpage",
                 defaults: new { controller = "HotelNumberPage", action = "HotelNumberView" });
 
-//app.MapControllerRoute(
-//    name: "hotel_number",
-//    pattern: "{controller=HotelNumberView}/{action=HotelNumber}");
-
 app.Run();

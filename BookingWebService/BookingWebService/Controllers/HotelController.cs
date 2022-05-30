@@ -35,11 +35,5 @@ namespace BookingWebService.Controllers
 
             return Ok(hotel);
         }
-
-        [HttpPost("get_my_hotels"), Authorize]
-        public async Task<ActionResult<List<int>>> GetMyHotelsId()
-        {
-            return Ok(_hotelService.GetOwnHotelIdList());
-        }
     }
 }

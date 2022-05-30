@@ -18,8 +18,6 @@ namespace BookingWebService.Controllers
             _imageService = imageService;
         }
 
-        //public string Number(int id) => $"Number Id: {id}";
-
         public IActionResult Number(int id)
         {
             var hotelNumber = _hotelNumber.GetHotelNumberById(id);
@@ -43,6 +41,11 @@ namespace BookingWebService.Controllers
 
 
             return View(hotelNumbersView);
+        }
+
+        public IActionResult ApiGuide()
+        {
+            return View();
         }
 
         [HttpPost]

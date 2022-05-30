@@ -78,7 +78,8 @@ def on_process_booking_closing(booking_window, hotel_number_window):
 def btn_order(hotel_number_id, date, hotel_number_window):
     hotel_number_window.withdraw()
     booking_window = Toplevel(hotel_number_window)
-    booking_window.geometry('140x240')
+    booking_window.geometry('200x250')
+    booking_window.resizable(0, 0)
     booking_window.protocol("WM_DELETE_WINDOW",
                             lambda w1=booking_window, w2=hotel_number_window: on_process_booking_closing(w1, w2))
     _hotel_number_label = Label(booking_window, text='Hotel number')
@@ -116,23 +117,27 @@ def order_info_on_close(booking_order_window, hotel_number_window):
 def order_info(booking_order, hotel_number_window):
     hotel_number_window.withdraw()
     booking_order_window = Toplevel(hotel_number_window)
+    booking_order_window.resizable(0, 0)
     booking_order_window.protocol("WM_DELETE_WINDOW",
                                   lambda w1=booking_order_window, w2=hotel_number_window: order_info_on_close(w1, w2))
-    hotel_number_window.geometry('510x284')
+    booking_order_window.geometry('200x250')
+    _booking_order_id = Label(booking_order_window, text="Booking order ID")
+    _booking_order_id.grid(row=1, column=1)
+    booking_order_id = Label(booking_order_window, text=booking_order[7])
+    booking_order_id.grid(row=2, column=1)
     _label_first_name = Label(booking_order_window, text="First name")
-    _label_first_name.grid(row=1, column=1)
+    _label_first_name.grid(row=3, column=1)
     label_first_name = Label(booking_order_window, text=booking_order[1])
-    label_first_name.grid(row=2, column=1)
+    label_first_name.grid(row=4, column=1)
     _label_last_name = Label(booking_order_window, text="Last name")
-    _label_last_name.grid(row=3, column=1)
+    _label_last_name.grid(row=5, column=1)
     label_last_name = Label(booking_order_window, text=booking_order[2])
-    label_last_name.grid(row=4, column=1)
+    label_last_name.grid(row=6, column=1)
 
 
 def btn_command(hotel_number_id):
     update_booking_status()
     root.withdraw()
-    print(hotel_number_id)
     hotel_number_window = Toplevel(root)
     hotel_number_window.protocol("WM_DELETE_WINDOW", lambda window=hotel_number_window: on_date_panel_closing(window))
     hotel_number_window['bg'] = '#fafafa'
@@ -176,7 +181,8 @@ def btn_command(hotel_number_id):
                 Button(hotel_number_window,
                        text=str(dates_list[j].day) + '/' + str(dates_list[j].month) + '/' + str(dates_list[j].year),
                        bg='yellow', width=9, height=4,
-                       command=lambda b_o=booking_order_for_current_day, h_n_w=hotel_number_window: order_info(b_o, h_n_w))
+                       command=lambda b_o=booking_order_for_current_day, h_n_w=hotel_number_window: order_info(b_o,
+                                                                                                               h_n_w))
             )
         else:
             calendar_buttons_list.append(
@@ -194,15 +200,12 @@ def btn_command(hotel_number_id):
             calendar_x = 1
             calendar_y = calendar_y + 1
 
-    print('test')
-
 
 if __name__ == '__main__':
 
     service.register()
     service.login()
 
-    # database.generate_db()
     upload_all_hotel_data()
 
     root = Tk()

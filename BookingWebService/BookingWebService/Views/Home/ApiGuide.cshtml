@@ -1,0 +1,238 @@
+﻿@{
+    Layout = "_Layout";
+}
+
+<div class="vr"></div>
+
+<div class="container">
+    <div class="row">
+        <p>Booking Service API documention</p>
+    </div>
+    <div class="p-5 bg-light border rounded-3">
+        <div class="row">
+            <div class="col-sm-2"><button type="button" class="btn btn-success">POST</button></div>
+            <div class="col-sm-10"><h4>/api/Auth/register</h4></div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12">
+                <h4>Use to register the owner of the hotels</h4>
+            </div>
+        </div>
+        <div class="row">
+            <p>Example value</p>
+            <div class="col-sm-12">
+                <div class="h-100 p-5 text-white bg-dark rounded-3">
+                    <p>{</p>
+                    <p>"login": "string",</p>
+                    <p>"password": "string"</p>
+                    <p>}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="p-5 bg-light border rounded-3">
+        <div class="row">
+            <div class="col-sm-2"><button type="button" class="btn btn-success">POST</button></div>
+            <div class="col-sm-10"><h4>/api/Auth/register</h4></div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12">
+                <p>Use for hotel owner registration</p>
+            </div>
+        </div>
+        <div class="row">
+            <p>Example value</p>
+            <div class="col-sm-12">
+                <div class="p-5 text-white bg-dark rounded-3">
+                    <p>{</p>
+                    <p>"login": "string",</p>
+                    <p>"password": "string"</p>
+                    <p>}</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <p>Response is bearer auth token</p>
+            <p>Use it on auth based request by putting it in header of request as below</p>
+            <p>"Authorization": "bearer your_token"</p>
+        </div>
+    </div>
+
+    <div class="p-5 bg-light border rounded-3">
+        <div class="row">
+            <div class="col-sm-2"><button type="button" class="btn btn-success">POST</button></div>
+            <div class="col-sm-10"><h4>/api/Hotel/add_hotel</h4></div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12">
+                <p>Use for adding hotel to booking service</p>
+            </div>
+        </div>
+        <div class="row">
+            <p>Example value</p>
+            <div class="col-sm-12">
+                <div class="h-100 p-5 text-white bg-dark rounded-3">
+                    <p>{</p>
+                    <p>"name" : "string",</p>
+                    <p>"city" : "string",</p>
+                    <p>"address" : "string"</p>
+                    <p>}</p>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <p>Example response</p>
+            <div class="col-sm-12">
+                <div class="h-100 p-5 text-white bg-dark rounded-3">
+                    <p>{</p>
+                    <p>"id": 0,</p>
+                    <p>"name" : "string",</p>
+                    <p>"city" : "string",</p>
+                    <p>"address" : "string"</p>
+                    <p>}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="p-5 bg-light border rounded-3">
+        <div class="row">
+            <div class="col-sm-2"><button type="button" class="btn btn-success">POST</button></div>
+            <div class="col-sm-10"><h4>/api/HotelNumber/add_hotel_number</h4></div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12">
+                <h4>Use for adding hotel number to booking service</h4>
+            </div>
+        </div>
+        <div class="row">
+            <p>Example value</p>
+            <div class="col-sm-12">
+                <div class="h-100 p-5 text-white bg-dark rounded-3">
+                    <p>{</p>
+                    <p>"hotelId": 0,</p>
+                    <p>"price": 0,</p>
+                    <p>"description": "string"</p>
+                    <p>}</p>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <p>Example response</p>
+            <div class="col-sm-12">
+                <div class="h-100 p-5 text-white bg-dark rounded-3">
+                    <p>{</p>
+                    <p>"id": 0</p>
+                    <p>}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="p-5 bg-light border rounded-3">
+        <div class="row">
+            <div class="col-sm-2"><button type="button" class="btn btn-warning">PUT</button></div>
+            <div class="col-sm-10"><h4>/api/HotelNumber/add_booking_order</h4></div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12">
+                <h4>Use for adding to hotel number info about date of reservation</h4>
+            </div>
+        </div>
+        <div class="row">
+            <p>Example value</p>
+            <div class="col-sm-12">
+                <div class="h-100 p-5 text-white bg-dark rounded-3">
+                    <p>{</p>
+                    <p>"hotelNumberId": 0,</p>
+                    <p>"year": 0,</p>
+                    <p>"month": 0,</p>
+                    <p>"day": 0</p>
+                    <p>}</p>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <p>Example response</p>
+            <div class="col-sm-12">
+                <div class="h-100 p-5 text-white bg-dark rounded-3">
+                    <p>{</p>
+                    <p>"id": 0,</p>
+                    <p>"firstName": "string",</p>
+                    <p>"lastName": "string",</p>
+                    <p>"year": 0,</p>
+                    <p>"month": 0,</p>
+                    <p>"day": 0</p>
+                    <p>}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="p-5 bg-light border rounded-3">
+        <div class="row">
+            <div class="col-sm-2"><button type="button" class="btn btn-primary">GET</button></div>
+            <div class="col-sm-10"><h4>/api/HotelNumber/get_booking_orders</h4></div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12">
+                <h4>Use for getting booking orders list of your hotel number</h4>
+            </div>
+        </div>
+        <div class="row">
+            <p>Example response</p>
+            <div class="col-sm-12">
+                <div class="h-100 p-5 text-white bg-dark rounded-3">
+                    <p>[</p>
+                    <p>{</p>
+                    <p>"id": 0,</p>
+                    <p>"hotelNumberId": 0,</p>
+                    <p>"firstName": "string",</p>
+                    <p>"lastName": "string",</p>
+                    <p>"year": 0,</p>
+                    <p>"month": 0,</p>
+                    <p>"day": 0</p>
+                    <p>}</p>
+                    <p>]</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="p-5 bg-light border rounded-3">
+        <div class="row">
+            <div class="col-sm-2"><button type="button" class="btn btn-success">POST</button></div>
+            <div class="col-sm-10"><h4>/api/Image/add_image</h4></div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12">
+                <h4>Use for uploading image to your hotel number</h4>
+            </div>
+        </div>
+        <div class="row">
+            <p>Example value</p>
+            <div class="col-sm-12">
+                <div class="h-100 p-5 text-white bg-dark rounded-3">
+                    <p>{</p>
+                    <p>"hotelNumberId": 0,</p>
+                    <p>"base64ImageData": "string"</p>
+                    <p>}</p>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <p>Example response</p>
+            <div class="col-sm-12">
+                <div class="h-100 p-5 text-white bg-dark rounded-3">
+                    <p>{</p>
+                    <p>"id": 0,</p>
+                    <p>"imageData": "string"</p>
+                    <p>}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

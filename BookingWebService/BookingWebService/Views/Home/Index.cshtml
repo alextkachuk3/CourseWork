@@ -7,6 +7,8 @@
     var hotelNumbers = Model.ToArray();
 }
 
+<div class="vr"></div>
+
 <div class="container">
 
     @for (int i = 0; i < 2 && i < hotelNumbers.Count() / 3; i++)
@@ -16,7 +18,7 @@
             @for (int j = 0; j < 3; j++)
             {
                 <div class="col-sm-4">
-                    <img src="@string.Format("data:image/png;base64,{0}", @hotelNumbers[i*3 + j].Image)" class="img-thumbnail" height="350">
+                    <img src="@string.Format("data:image/png;base64,{0}", @hotelNumbers[i*3 + j].Image)" class="img-thumbnail main_menu_img">
                     <div class="row">
                         <div class="col-sm-8">
                             <p>Hotel: @hotelNumbers[i*3 + j].HotelName</p>

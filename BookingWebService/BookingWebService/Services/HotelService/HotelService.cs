@@ -32,39 +32,5 @@ namespace BookingWebService.Services.HotelService
         {
             return _dbContext.Hotels.Where(h => h.Id.Equals(Id)).Include(h => h.User).FirstOrDefault();
         }
-
-        public List<int> GetOwnHotelIdList()
-        {
-            List<int> result = new List<int>();
-            foreach (Hotel hotel in _dbContext.Hotels.Where(h => h.User.Id.Equals(_userService.GetId())))
-                result.Add(hotel.Id);
-            return result;
-        }
-
-        public void RemoveHotel(int Id)
-        {
-            try
-            {
-                var itemToRemove = _dbContext.Hotels.Where(i => i.Id.Equals(Id)).FirstOrDefault();
-
-                if (itemToRemove != null)
-                {
-                    foreach (var hotelNumber in itemToRemove.HotelNumbers)
-                    {
-                        _dbContext.HotelNumbers.Remove(hotelNumber);
-                    }
-                        
-                    _dbContext.Hotels.Remove(itemToRemove);
-                }
-            }
-            catch
-            {
-                throw;
-            }
-            finally
-            {
-                _dbContext.SaveChanges();
-            }
-        }
     }
 }

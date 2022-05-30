@@ -85,29 +85,16 @@ namespace BookingWebService.Services.HotelNumberService
             var random = new Random();
             HashSet<int> numbers = new HashSet<int>();
 
-            if(hotelCount / hotelNumberCount < 80)
+            while (numbers.Count < hotelNumberCount)
             {
-                for(int i = 1; i <= hotelNumberCount; i++)
-                {
-                    numbers.Add(i);
-                }
-            }
-            else
-            {
-                while (numbers.Count < hotelNumberCount)
-                {
                     numbers.Add(random.Next(0, hotelCount));
-                }
-            }
+            }            
             
-            
-            List<HotelNumber> result = new List<HotelNumber>();
-
-            
+            List<HotelNumber> result = new List<HotelNumber>();            
 
             foreach (int i in numbers)
             {
-                HotelNumber? hotelNumber = _dbContext.HotelNumbers.Where(h => h.Id.Equals(i)).Include(h => h.Hotel).Include(h => h.Images).FirstOrDefault();
+                HotelNumber? hotelNumber = _dbContext.HotelNumbers.Where(h => h.Id.Equals(i)).Include(h => h.Hotel).FirstOrDefault();
                 if (hotelNumber != null)
                 {
                     result.Add(hotelNumber);
