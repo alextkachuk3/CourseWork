@@ -70,7 +70,9 @@ namespace BookingWebService.Services.HotelNumberService
 
         public List<HotelNumber> GetRandomHotelNumbers(int hotelNumberCount)
         {
-            if (_dbContext.HotelNumbers.Count() < hotelNumberCount)
+            var hotelCount = _dbContext.HotelNumbers.Count();
+
+            if (hotelCount < hotelNumberCount)
             {
                 //hotelNumberCount = _dbContext.HotelNumbers.Count();
                 return _dbContext.HotelNumbers.Include(h => h.Hotel).ToList();
@@ -78,10 +80,22 @@ namespace BookingWebService.Services.HotelNumberService
 
             var random = new Random();
             HashSet<int> numbers = new HashSet<int>();
-            while (numbers.Count < hotelNumberCount)
+
+            if(hotelCount / hotelNumberCount < 80)
             {
-                numbers.Add(random.Next(0, _dbContext.HotelNumbers.Count()));
+                for(int i = 1; i <= hotelNumberCount; i++)
+                {
+                    numbers.Add(i);
+                }
             }
+            else
+            {
+                while (numbers.Count < hotelNumberCount)
+                {
+                    numbers.Add(random.Next(0, hotelCount));
+                }
+            }
+            
             
             List<HotelNumber> result = new List<HotelNumber>();
 

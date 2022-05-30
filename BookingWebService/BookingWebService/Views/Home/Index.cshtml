@@ -16,7 +16,7 @@
             @for (int j = 0; j < 3; j++)
             {
                 <div class="col-sm-4">
-                    <img src="@string.Format("data:image/png;base64,{0}", @hotelNumbers[i*3 + j].Image)" class="img-thumbnail">
+                    <img src="@string.Format("data:image/png;base64,{0}", @hotelNumbers[i*3 + j].Image)" class="img-thumbnail" height="350">
                     <div class="row">
                         <div class="col-sm-8">
                             <p>Hotel: @hotelNumbers[i*3 + j].HotelName</p>
