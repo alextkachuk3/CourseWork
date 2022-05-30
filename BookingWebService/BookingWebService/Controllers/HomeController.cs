@@ -21,7 +21,9 @@ namespace BookingWebService.Controllers
 
         public IActionResult Number(int id)
         {
-            return View();
+            var hotelNumber = _hotelNumber.GetHotelNumberById(id);
+
+            return View(hotelNumber);
         }
 
         public IActionResult Index()

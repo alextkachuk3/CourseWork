@@ -65,7 +65,7 @@ namespace BookingWebService.Services.HotelNumberService
 
         public HotelNumber? GetHotelNumberById(int hotelNumberId)
         {
-            return _dbContext.HotelNumbers.Where(h => h.Id.Equals(hotelNumberId)).Include(h => h.Hotel).ThenInclude(h => h.User).FirstOrDefault();
+            return _dbContext.HotelNumbers.Where(h => h.Id.Equals(hotelNumberId)).Include(h => h.Hotel).ThenInclude(h => h.User).Include(h => h.Images).Include(h => h.BookingOrders).FirstOrDefault();
         }
 
         public List<HotelNumber> GetRandomHotelNumbers(int hotelNumberCount)
@@ -73,7 +73,7 @@ namespace BookingWebService.Services.HotelNumberService
             if (_dbContext.HotelNumbers.Count() < hotelNumberCount)
             {
                 //hotelNumberCount = _dbContext.HotelNumbers.Count();
-                return _dbContext.HotelNumbers.Include(h => h.Hotel).Include(h => h.Images).ToList();
+                return _dbContext.HotelNumbers.Include(h => h.Hotel).ToList();
             }
 
             var random = new Random();
