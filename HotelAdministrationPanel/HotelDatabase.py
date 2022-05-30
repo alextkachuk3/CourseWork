@@ -58,7 +58,7 @@ class HotelDatabase:
             else:
                 get_hotel_numbers_query = "SELECT * FROM booking_orders " \
                                           "WHERE hotel_number_id = %s AND year = %s AND month = %s AND day = %s"
-                get_hotel_numbers_val = (hotel_number_id, date.year, date.month. date.day)
+                get_hotel_numbers_val = (hotel_number_id, date.year, date.month.date.day)
             cursor.execute(get_hotel_numbers_query, get_hotel_numbers_val)
             return cursor.fetchall()
 
@@ -123,6 +123,18 @@ class HotelDatabase:
         finally:
             self.connection.commit()
 
+    def add_booking_order_from_service(self, hotel_number_id, first_name, last_name, year, month, day, service_id):
+        try:
+            with self.connection.cursor() as cursor:
+                add_booking_order_query = \
+                    "INSERT INTO booking_orders (first_name, last_name, year, month, day, hotel_number_id, " \
+                    "booking_service_id)" \
+                    " VALUES (%s, %s, %s, %s, %s, %s, %s) "
+                add_booking_order_val = (first_name, last_name, year, month, day, hotel_number_id, service_id)
+                cursor.execute(add_booking_order_query, add_booking_order_val)
+        finally:
+            self.connection.commit()
+
     def generate_db(self):
         with self.connection.cursor() as cursor:
             try:
@@ -161,7 +173,7 @@ class HotelDatabase:
                                        [convert_to_binary_data(os.path.dirname(os.path.abspath(__file__)) +
                                                                '\\hotel_photos\\'
                                                                + str(image_counter) +
-                                                               '.jpg'), i+1])
+                                                               '.jpg'), i + 1])
 
                         image_counter = image_counter + 1
 

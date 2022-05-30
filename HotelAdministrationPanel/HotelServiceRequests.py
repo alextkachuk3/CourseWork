@@ -20,7 +20,6 @@ class HotelServiceRequests:
         })
         headers = {"Content-Type": "application/json"}
         reply = requests.post(url=URL + '/api/Auth/register', data=data, headers=headers, verify=verify)
-        print(reply.json())
 
     def login(self):
         data = json.dumps({
@@ -29,7 +28,6 @@ class HotelServiceRequests:
         })
         headers = {"Content-Type": "application/json"}
         reply = requests.post(url=URL + '/api/Auth/login', data=data, headers=headers, verify=verify)
-        print(reply.text)
         self.token = reply.text
 
     def add_hotel(self, name, city, address):
@@ -41,7 +39,6 @@ class HotelServiceRequests:
         headers = {"Content-Type": "application/json",
                    "Authorization": "bearer %s" % self.token}
         reply = requests.post(url=URL + '/api/Hotel/add_hotel', data=data, headers=headers, verify=verify)
-        print(reply.json())
         return reply.json()
 
     def add_hotel_number(self, description, hotel_id):
@@ -53,7 +50,6 @@ class HotelServiceRequests:
         headers = {"Content-Type": "application/json",
                    "Authorization": "bearer %s" % self.token}
         reply = requests.post(url=URL + '/api/HotelNumber/add_hotel_number', data=data, headers=headers, verify=verify)
-        print(reply.json())
         return reply.json()
 
     def add_booking_order(self, hotel_number_id, year, month, day):
@@ -66,7 +62,6 @@ class HotelServiceRequests:
         headers = {"Content-Type": "application/json",
                    "Authorization": "bearer %s" % self.token}
         reply = requests.put(url=URL + '/api/HotelNumber/add_booking_order', data=data, headers=headers, verify=verify)
-        print(reply.json())
         return reply.json()
 
     def add_image(self, hotel_number_id, image):
@@ -78,6 +73,10 @@ class HotelServiceRequests:
         headers = {"Content-Type": "application/json",
                    "Authorization": "bearer %s" % self.token}
         reply = requests.post(url=URL + '/api/Image/add_image', data=data, headers=headers, verify=verify)
-        print(reply)
-        print(reply.json())
+        return reply.json()
+
+    def get_booking_orders(self):
+        headers = {"Content-Type": "application/json",
+                   "Authorization": "bearer %s" % self.token}
+        reply = requests.get(url=URL + '/api/HotelNumber/get_booking_orders', headers=headers, verify=verify)
         return reply.json()

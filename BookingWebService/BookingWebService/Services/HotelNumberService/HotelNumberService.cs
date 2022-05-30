@@ -63,6 +63,11 @@ namespace BookingWebService.Services.HotelNumberService
             }
         }
 
+        public List<BookingOrder> GetBookingOrdersList(int ownerId)
+        {
+            return _dbContext.BookingOrders.Where(o => o.HotelNumber.Hotel.User.Id.Equals(ownerId)).Include(o => o.HotelNumber).ToList();
+        }
+
         public HotelNumber? GetHotelNumberById(int hotelNumberId)
         {
             return _dbContext.HotelNumbers.Where(h => h.Id.Equals(hotelNumberId)).Include(h => h.Hotel).ThenInclude(h => h.User).Include(h => h.Images).Include(h => h.BookingOrders).FirstOrDefault();
@@ -74,7 +79,6 @@ namespace BookingWebService.Services.HotelNumberService
 
             if (hotelCount < hotelNumberCount)
             {
-                //hotelNumberCount = _dbContext.HotelNumbers.Count();
                 return _dbContext.HotelNumbers.Include(h => h.Hotel).ToList();
             }
 
@@ -112,6 +116,8 @@ namespace BookingWebService.Services.HotelNumberService
 
             return result;
         }
+
+        
 
         public void RemoveHotelNumber(int hotelNumberId)
         {

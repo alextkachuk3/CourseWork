@@ -39,6 +39,24 @@ def upload_all_hotel_data():
             database.update_booking_order_service_id(booking_order[0], reply['id'])
 
 
+def update_booking_status():
+    service_booking_orders = service.get_booking_orders()
+    local_booking_orders = database.get_booking_orders()
+    for s in range(len(service_booking_orders)):
+        found = False
+        for l in range(len(local_booking_orders)):
+            if service_booking_orders[s]['id'] == local_booking_orders[l][7]:
+                found = True
+                break
+        if found is False:
+            database.add_booking_order_from_service(service_booking_orders[s]['hotelNumberId'],
+                                                    service_booking_orders[s]['firstName'],
+                                                    service_booking_orders[s]['lastName'],
+                                                    service_booking_orders[s]['year'],
+                                                    service_booking_orders[s]['month'],
+                                                    service_booking_orders[s]['day'],
+                                                    service_booking_orders[s]['id'])
+
 
 def process_booking(hotel_number_id, date, first_name, last_name, booking_confirm_window, hotel_number_window):
     hotel_number_window.deiconify()
@@ -91,6 +109,7 @@ def on_date_panel_closing(window):
 
 
 def btn_command(hotel_number_id):
+    update_booking_status()
     root.withdraw()
     print(hotel_number_id)
     hotel_number_window = Toplevel(root)

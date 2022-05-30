@@ -72,5 +72,26 @@ namespace BookingWebService.Controllers
 
             return Ok(bookingOrder);
         }
+
+        [HttpGet("get_booking_orders"), Authorize]
+        public async Task<ActionResult<List<BookingOrderDto>>> GetBookingOrders()
+        {
+            var userId = _userService.GetId();
+            var bookingOrders = _hotelNumberService.GetBookingOrdersList(userId);
+            var result = new List<BookingOrderDto>();
+            foreach (var bookingOrder in bookingOrders)
+            {
+                var bookingOrderDto = new BookingOrderDto();
+                bookingOrderDto.FirstName = bookingOrder.FirstName;
+                bookingOrderDto.LastName = bookingOrder.LastName;
+                bookingOrderDto.Year = bookingOrder.Year;
+                bookingOrderDto.Month = bookingOrder.Month;
+                bookingOrderDto.Day = bookingOrder.Day;
+                bookingOrderDto.Id = bookingOrder.Id;
+                bookingOrderDto.HotelNumberId = bookingOrder.HotelNumber.Id;
+                result.Add(bookingOrderDto);
+            }    
+            return Ok(result);
+        }
     }
 }
