@@ -1,4 +1,5 @@
-﻿using BookingWebService.Services.HotelNumberService;
+﻿using BookingWebService.Models;
+using BookingWebService.Services.HotelNumberService;
 using BookingWebService.Services.ImageService;
 using BookingWebService.ViewModels;
 using Microsoft.AspNetCore.Mvc;
@@ -42,6 +43,36 @@ namespace BookingWebService.Controllers
             
 
             return View(hotelNumbersView);
+        }
+
+        [HttpPost]
+        public string ProcessBooking(int hotelNumberId, string firstName, string lastName, int countOfDaysFromToday)
+        {
+            var date = DateTime.Now;
+            date = date.AddDays(countOfDaysFromToday);
+            BookingOrder? bookingOrder = new BookingOrder();
+            bookingOrder.Year = date.Year;
+            bookingOrder.Month = date.Month;
+            bookingOrder.Day = date.Day;
+            bookingOrder.FirstName = firstName;
+            bookingOrder.LastName = lastName;
+            
+            try
+            {
+                _hotelNumber.AddBookingOrder(hotelNumberId, bookingOrder);
+            }
+            catch
+            {
+                bookingOrder = null;
+            }
+            if(bookingOrder == null)
+            {
+                return "Booking process failed!";
+            }
+            else
+            {
+                return "Success! Number of your booking order: " + bookingOrder.Id;
+            }
         }
     }
 }
