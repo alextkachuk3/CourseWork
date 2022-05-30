@@ -29,10 +29,10 @@ namespace BookingWebService.Controllers
 
         public IActionResult Index()
         {
-            var hotelNumbersView = new List<HotelNumberViewModel>(); 
+            var hotelNumbersView = new List<HotelNumberViewModel>();
             var hotelNumbers = _hotelNumber.GetRandomHotelNumbers(6);
-            
-            for(int i = 0; i < hotelNumbers.Count; i++)
+
+            for (int i = 0; i < hotelNumbers.Count; i++)
             {
                 var hotelNumber = new HotelNumberViewModel();
                 hotelNumber.HotelName = hotelNumbers[i].Hotel.Name;
@@ -40,13 +40,13 @@ namespace BookingWebService.Controllers
                 hotelNumber.Image = _imageService.GetFirstHotelNumberImage(hotelNumber.Id);
                 hotelNumbersView.Add(hotelNumber);
             }
-            
+
 
             return View(hotelNumbersView);
         }
 
         [HttpPost]
-        public string ProcessBooking(int hotelNumberId, string firstName, string lastName, int countOfDaysFromToday)
+        public IActionResult ProcessBooking(int hotelNumberId, string firstName, string lastName, int countOfDaysFromToday)
         {
             var date = DateTime.Now;
             date = date.AddDays(countOfDaysFromToday);
@@ -56,7 +56,7 @@ namespace BookingWebService.Controllers
             bookingOrder.Day = date.Day;
             bookingOrder.FirstName = firstName;
             bookingOrder.LastName = lastName;
-            
+
             try
             {
                 _hotelNumber.AddBookingOrder(hotelNumberId, bookingOrder);
@@ -65,14 +65,17 @@ namespace BookingWebService.Controllers
             {
                 bookingOrder = null;
             }
-            if(bookingOrder == null)
+            if (bookingOrder == null)
             {
-                return "Booking process failed!";
+                ViewBag.Message = "Booking process failed!";
+
             }
             else
             {
-                return "Success! Number of your booking order: " + bookingOrder.Id;
+                ViewBag.Message = "Success! Number of your booking order: " + bookingOrder.Id;
             }
+
+            return View();
         }
     }
 }
