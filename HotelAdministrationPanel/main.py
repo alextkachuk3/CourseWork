@@ -108,6 +108,27 @@ def on_date_panel_closing(window):
     window.destroy()
 
 
+def order_info_on_close(booking_order_window, hotel_number_window):
+    hotel_number_window.deiconify()
+    booking_order_window.destroy()
+
+
+def order_info(booking_order, hotel_number_window):
+    hotel_number_window.withdraw()
+    booking_order_window = Toplevel(hotel_number_window)
+    booking_order_window.protocol("WM_DELETE_WINDOW",
+                                  lambda w1=booking_order_window, w2=hotel_number_window: order_info_on_close(w1, w2))
+    hotel_number_window.geometry('510x284')
+    _label_first_name = Label(booking_order_window, text="First name")
+    _label_first_name.grid(row=1, column=1)
+    label_first_name = Label(booking_order_window, text=booking_order[1])
+    label_first_name.grid(row=2, column=1)
+    _label_last_name = Label(booking_order_window, text="Last name")
+    _label_last_name.grid(row=3, column=1)
+    label_last_name = Label(booking_order_window, text=booking_order[2])
+    label_last_name.grid(row=4, column=1)
+
+
 def btn_command(hotel_number_id):
     update_booking_status()
     root.withdraw()
@@ -127,18 +148,45 @@ def btn_command(hotel_number_id):
     calendar_buttons_list = []
     dates_list = []
 
+    booking_orders = database.get_booking_orders()
+
+    current_hotel_number_booking_orders = []
+
+    for booking_order in booking_orders:
+        if booking_order[6] == hotel_number_id:
+            current_hotel_number_booking_orders.append(booking_order)
+
     for j in range(28):
 
         dates_list.append(current_datetime + timedelta(days=j))
 
-        calendar_buttons_list.append(
-            Button(hotel_number_window,
-                   text=str(dates_list[j].day) + '/' + str(dates_list[j].month) + '/' + str(dates_list[j].year),
-                   bg='green', width=9, height=4,
-                   command=lambda hotel_n=hotel_number_id, selected_date=dates_list[j]: btn_order(hotel_n,
-                                                                                                  selected_date,
-                                                                                                  hotel_number_window))
-        )
+        booking_order_exist_for_current_day = False
+        booking_order_for_current_day = None
+
+        for booking_order in current_hotel_number_booking_orders:
+            if (dates_list[j].year == booking_order[3]
+                    and dates_list[j].month == booking_order[4]
+                    and dates_list[j].day == booking_order[5]):
+                booking_order_exist_for_current_day = True
+                booking_order_for_current_day = booking_order
+                break
+
+        if booking_order_exist_for_current_day:
+            calendar_buttons_list.append(
+                Button(hotel_number_window,
+                       text=str(dates_list[j].day) + '/' + str(dates_list[j].month) + '/' + str(dates_list[j].year),
+                       bg='yellow', width=9, height=4,
+                       command=lambda b_o=booking_order_for_current_day, h_n_w=hotel_number_window: order_info(b_o, h_n_w))
+            )
+        else:
+            calendar_buttons_list.append(
+                Button(hotel_number_window,
+                       text=str(dates_list[j].day) + '/' + str(dates_list[j].month) + '/' + str(dates_list[j].year),
+                       bg='green', width=9, height=4,
+                       command=lambda hotel_n=hotel_number_id, selected_date=dates_list[j]: btn_order(hotel_n,
+                                                                                                      selected_date,
+                                                                                                      hotel_number_window))
+            )
         calendar_buttons_list[j].grid(column=calendar_x, row=calendar_y)
 
         calendar_x = calendar_x + 1
