@@ -16,5 +16,7 @@ namespace BookingWebService.Services.HotelNumberService
 
         public List<BookingOrder> GetBookingOrdersList(int ownerId);
 
+        public List<HotelNumber> SearchHotelNumbers(string keyword);
+
     }
 }

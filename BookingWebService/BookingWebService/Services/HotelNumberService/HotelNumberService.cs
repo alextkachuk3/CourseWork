@@ -87,10 +87,10 @@ namespace BookingWebService.Services.HotelNumberService
 
             while (numbers.Count < hotelNumberCount)
             {
-                    numbers.Add(random.Next(0, hotelCount));
-            }            
-            
-            List<HotelNumber> result = new List<HotelNumber>();            
+                numbers.Add(random.Next(0, hotelCount));
+            }
+
+            List<HotelNumber> result = new List<HotelNumber>();
 
             foreach (int i in numbers)
             {
@@ -98,24 +98,24 @@ namespace BookingWebService.Services.HotelNumberService
                 if (hotelNumber != null)
                 {
                     result.Add(hotelNumber);
-                }                
+                }
             }
 
             return result;
         }
 
-        
+
 
         public void RemoveHotelNumber(int hotelNumberId)
         {
             var hotelNumber = _dbContext.HotelNumbers.Where(h => h.Id.Equals(hotelNumberId)).FirstOrDefault();
-            
+
             try
             {
-                if(hotelNumber != null)
+                if (hotelNumber != null)
                 {
                     _dbContext.HotelNumbers.Remove(hotelNumber);
-                }                
+                }
             }
             catch
             {
@@ -124,8 +124,15 @@ namespace BookingWebService.Services.HotelNumberService
             finally
             {
                 _dbContext.SaveChanges();
-            }            
+            }
         }
 
+        public List<HotelNumber> SearchHotelNumbers(string keyword)
+        {
+            return _dbContext.HotelNumbers.Include(h => h.Hotel).Where(h => h.Hotel.Address.ToLower().Contains(keyword) ||
+                                                                       h.Hotel.City.ToLower().Contains(keyword) ||
+                                                                       h.Hotel.Name.ToLower().Contains(keyword) ||
+                                                                       h.Description.ToLower().Contains(keyword)).ToList();
+        }
     }
 }

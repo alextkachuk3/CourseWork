@@ -12,15 +12,12 @@ namespace BookingWebService.Controllers
     [ApiController]
     public class ImageController : ControllerBase
     {
-
-        private readonly IConfiguration _configuration;
         private readonly IUserService _userService;
         private readonly IImageService _imageService;
         private readonly IHotelNumberService _hotelNumberService;
 
-        public ImageController(IConfiguration configuration, IUserService userService, IImageService imageService, IHotelNumberService hotelNumberService)
+        public ImageController(IUserService userService, IImageService imageService, IHotelNumberService hotelNumberService)
         {
-            _configuration = configuration;
             _userService = userService;
             _imageService = imageService;
             _hotelNumberService = hotelNumberService;

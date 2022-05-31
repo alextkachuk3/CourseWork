@@ -17,9 +17,8 @@ namespace BookingWebService.Controllers
         private readonly IHotelNumberService _hotelNumberService;
         private readonly IHotelService _hotelService;
 
-        public HotelNumberController(IConfiguration configuration, IUserService userService, IHotelNumberService hotelNumberService, IHotelService hotelService)
+        public HotelNumberController(IUserService userService, IHotelNumberService hotelNumberService, IHotelService hotelService)
         {
-            _configuration = configuration;
             _userService = userService;
             _hotelNumberService = hotelNumberService;
             _hotelService = hotelService;

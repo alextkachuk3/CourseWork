@@ -80,5 +80,25 @@ namespace BookingWebService.Controllers
 
             return View();
         }
+
+        [HttpPost]
+
+        public IActionResult Index(string keyword)
+        {
+            var hotelNumbersView = new List<HotelNumberViewModel>();
+            var hotelNumbers = _hotelNumber.SearchHotelNumbers(keyword);
+
+            for (int i = 0; i < hotelNumbers.Count; i++)
+            {
+                var hotelNumber = new HotelNumberViewModel();
+                hotelNumber.HotelName = hotelNumbers[i].Hotel.Name;
+                hotelNumber.Id = hotelNumbers[i].Id;
+                hotelNumber.Image = _imageService.GetFirstHotelNumberImage(hotelNumber.Id);
+                hotelNumbersView.Add(hotelNumber);
+            }
+
+
+            return View(hotelNumbersView);
+        }
     }
 }

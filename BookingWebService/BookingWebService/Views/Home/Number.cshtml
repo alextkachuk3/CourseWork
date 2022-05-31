@@ -47,39 +47,55 @@
         <div class="col-sm-12 col-md-4">
             <p>Description:</p>
             <p>@Model.Description</p>
-            <p>Price:</p>
-            <p>@Model.Price</p>
+            <div class="row">
+                <div class="col-sm-3">
+                    <p>Hotel:</p>
+                    <p>@Model.Hotel.Name</p>
+                </div>
+                <div class="col-sm-3">
+                    <p>City:</p>
+                    <p>@Model.Hotel.City</p>
+                </div>
+                <div class="col-sm-3">
+                    <p>Address:</p>
+                    <p>@Model.Hotel.Address</p>
+                </div>
+                <div class="col-sm-3">
+                    <p>Price:</p>
+                    <p>@Model.Price</p>
+                </div>
 
-            <form method="post" enctype="multipart/form-data" asp-controller="Home" asp-action="ProcessBooking">
-                <input type="hidden" name="hotelNumberId" value="@Model.Id"/>
-                <p>
-                    Date:
-                    <select class="form-select" name="countOfDaysFromToday">
-                        @for (int i = 0; i < 30; i++)
-                        {
-                            var current = now.AddDays(i);
-                            if (Model.BookingOrders.Where(o => o.Day.Equals(current.Day) && o.Month.Equals(current.Month) && o.Year.Equals(current.Year)).FirstOrDefault() == null)
+
+                <form method="post" enctype="multipart/form-data" asp-controller="Home" asp-action="ProcessBooking">
+                    <input type="hidden" name="hotelNumberId" value="@Model.Id" />
+                    <p>
+                        Date:
+                        <select class="form-select" name="countOfDaysFromToday">
+                            @for (int i = 0; i < 30; i++)
                             {
-                                <option value="@i">@current.Day/@current.Month/@current.Year</option>
+                                var current = now.AddDays(i);
+                                if (Model.BookingOrders.Where(o => o.Day.Equals(current.Day) && o.Month.Equals(current.Month) && o.Year.Equals(current.Year)).FirstOrDefault() == null)
+                                {
+                                    <option value="@i">@current.Day/@current.Month/@current.Year</option>
+                                }
+                                else
+                                {
+                                    <option disabled value="@i">@current.Day/@current.Month/@current.Year</option>
+                                }
                             }
-                            else
-                            {
-                                <option disabled value="@i">@current.Day/@current.Month/@current.Year</option>
-                            }
-                        }
-                    </select>
-                </p>
-                <p>
-                    First name:
-                    <input class="form-control" type="text" name="firstName">
-                </p>
-                <p>
-                    Last name:
-                    <input class="form-control" type="text" name="lastName">
-                </p>
-                <input type="submit" class="btn btn-primary" value="Submit" />
-            </form>
+                        </select>
+                    </p>
+                    <p>
+                        First name:
+                        <input class="form-control" type="text" name="firstName">
+                    </p>
+                    <p>
+                        Last name:
+                        <input class="form-control" type="text" name="lastName">
+                    </p>
+                    <input type="submit" class="btn btn-primary" value="Submit" />
+                </form>
+            </div>
+
         </div>
-
     </div>
-</div>

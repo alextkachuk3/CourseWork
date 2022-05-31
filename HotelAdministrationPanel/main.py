@@ -59,7 +59,8 @@ def update_booking_status():
 
 
 def process_booking(hotel_number_id, date, first_name, last_name, booking_confirm_window, hotel_number_window):
-    hotel_number_window.deiconify()
+    root.deiconify()
+    hotel_number_window.destroy()
     booking_confirm_window.destroy()
     database.add_booking_order(hotel_number_id, first_name, last_name, date)
     upload_all_hotel_data()
